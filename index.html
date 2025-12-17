@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ランダム文字生成</title>
+</head>
+<body>
+  <h1 id="result"></h1>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const len = parseInt(params.get("len")) || 0;
+    const lang = params.get("lang") || "ja";
+
+    let chars = "";
+
+    if (lang === "en") {
+      chars = "abcdefghijklmnopqrstuvwxyz";
+      document.documentElement.lang = "en";
+    } else {
+      chars = "あいうえおかきくけこさしすせそたちつてとなにぬねの" +
+              "はひふへほまみむめもやゆよらりるれろわをん";
+      document.documentElement.lang = "ja";
+    }
+
+    let result = "";
+
+    for (let i = 0; i < len; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    let message = "";
+    if (len > 0) {
+      message = result;
+    } else {
+      message = (lang === "en")
+        ? "Please add ?len=(number)&(en,ja) to the URL and reload."
+        : "URLの後ろに ?len=(数字)&(en,ja) をつけてリロードしてください";
+    }
+
+    document.getElementById("result").textContent = message;
+  </script>
+</body>
+</html>
